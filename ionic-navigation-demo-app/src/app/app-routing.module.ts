@@ -1,30 +1,30 @@
 import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
+import {AuthGuard} from './auth/auth.guard';
+
+
+//setting basic routes when page loads
+//loadchildern - lazy-loading feature modules
 const routes: Routes = [
   {
     path: '',
-    redirectTo:'recipes',
+    redirectTo:'places',
     pathMatch: 'full'
   },
   {
-    path: 'recipes',
-    children:[{
-      path:'',
-      loadChildren: () => import('./recipes/recipes.module').then(m=> m.RecipesPageModule)
-    },
-    {
-      path:':recipeId',
-      loadChildren: './recipes/recipe-detail/recipe-detail.module#RecipeDetailPageModule'
-    }
-   
-    ]
+    path: 'auth',
+    loadChildren: () => import('./auth/auth.module').then(m=> m.AuthPageModule)},
+  {
+    path:'places',
+    loadChildren: () => import ('./places/places.module').then(m=>m.PlacesPageModule),
+    canLoad: [AuthGuard]
   },
   {
-    path: 'recipes',
-    loadChildren: () => import('./recipes/recipes.module').then( m => m.RecipesPageModule)
-  }
-];
+    path:'bookings',
+    loadChildren: () => import ('./bookings/bookings.module').then(m=>m.BookingsPageModule),
+    canLoad: [AuthGuard]
+  }] ;
 
 @NgModule({
   imports: [
