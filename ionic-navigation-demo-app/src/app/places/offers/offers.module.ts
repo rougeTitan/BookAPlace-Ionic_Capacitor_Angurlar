@@ -3,16 +3,16 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
-import { Routes,RouterModule } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 
-import {OfferItemComponent} from './offer-item/offer-item.component';
+import { OfferItemComponent } from './offer-item/offer-item.component';
 import { OffersPage } from './offers.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: OffersPage
-  }
+    component: OffersPage,
+  },
 ];
 
 @NgModule({
@@ -20,8 +20,8 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
   ],
-  declarations: [OffersPage, OfferItemComponent]
+  declarations: [OffersPage, OfferItemComponent],
 })
 export class OffersPageModule {}

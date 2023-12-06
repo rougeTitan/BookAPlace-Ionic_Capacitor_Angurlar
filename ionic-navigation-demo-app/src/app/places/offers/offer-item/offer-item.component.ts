@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import {Place} from '../../place.model';
-import { IonMenuToggle } from '@ionic/angular';
+import { Place } from '../../place.model';
 
 @Component({
   selector: 'app-offer-item',
@@ -8,15 +7,9 @@ import { IonMenuToggle } from '@ionic/angular';
   styleUrls: ['./offer-item.page.scss'],
 })
 export class OfferItemComponent implements OnInit {
-  @Input() offer:Place;
+  @Input() offer: Place;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  
-  }
-  getDummyDate(){
-    return new Date();
-  }
-
+  ngOnInit() {}
 }
