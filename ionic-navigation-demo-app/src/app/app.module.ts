@@ -14,8 +14,6 @@ import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent],
-  //it seems like entrycomponent has been removed from ngmodule in recent version
-  entryComponents: [],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),

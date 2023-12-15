@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
-
 import { Observable } from 'rxjs';
-
 import { AuthService, AuthResponseData } from './auth.service';
 import { LoadingController, AlertController } from '@ionic/angular';
 
@@ -20,7 +18,8 @@ export class AuthPage implements OnInit {
     private authSerice: AuthService,
     private router: Router,
     private loadingCtrl: LoadingController,
-    private alertCtrl: AlertController) {}
+    private alertCtrl: AlertController
+  ) {}
 
   ngOnInit() {}
 

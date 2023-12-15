@@ -5,7 +5,6 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <!-- using reactive approch -->
   <form #f="ngForm" (ngSubmit)="onSubmit(f)">
     <ion-grid>
       <ion-row>
@@ -35,7 +34,7 @@
           <ion-button type="button" color="primary" fill="clear" expand="block" (click)="onSwitchAuthMode()">
             switch to {{ isLogin? 'Signup': 'Login'}}
           </ion-button>
-          <ion-button type="submit" color="primary" expand="block"  [disabled]="!f.valid">
+          <ion-button type="submit" color="primary" expand="block" [disabled]="!f.valid">
             {{ isLogin? 'Login' : 'Signup' }}
           </ion-button>
         </ion-col>

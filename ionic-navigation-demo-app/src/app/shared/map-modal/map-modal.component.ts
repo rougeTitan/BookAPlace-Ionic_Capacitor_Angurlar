@@ -26,7 +26,8 @@ export class MapModalComponent implements OnInit,AfterViewInit,OnDestroy {
   ngOnInit() {}
 
   ngAfterViewInit() {
-    this.getGoogleMaps().then(this.googleMaps => {
+    this.getGoogleMaps()
+    .then(this.googleMaps => {
       this.googleMaps = googleMaps;
       const mapEl = this.mapElementRef.nativeElement;
       const map = new googleMaps.Map(mapEl,{
@@ -49,15 +50,17 @@ export class MapModalComponent implements OnInit,AfterViewInit,OnDestroy {
       } else {
        const marker = new this.googleMaps.Marker({
         postion: this.center,
-        map:map,
+        map: map,
         title: 'Picked Location'
        });
        marker.setMap(map);
       }
-    }).catch(err=>{
+    })
+    .catch(err => {
       console.log(err);
     });
   }
+    
 
   oncancel(){
     this.modalCtrl.dismiss();
@@ -72,14 +75,14 @@ export class MapModalComponent implements OnInit,AfterViewInit,OnDestroy {
 
   private getGoogleMaps(): Promise<any> {
     const win = window as any;
-    const googleModule =win.google;
-    if(googleModule && googleModule.maps){
+    const googleModule = win.google;
+    if (googleModule && googleModule.maps){
       return Promise.resolve(googleModule.maps);
     }
 
     return new Promise((resolve,reject)=>{
       const script = document.createElement('script');
-      script.src = ''+ environment.googleMapsAPIKey;
+      script.src = 'googlemap api'+ environment.googleMapsAPIKey;
       script.async =true;
       script.defer = true;
       document.body.appendChild(script);
@@ -95,4 +98,3 @@ export class MapModalComponent implements OnInit,AfterViewInit,OnDestroy {
   }
 }
 
-}

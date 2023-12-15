@@ -1,7 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, from } from 'rxjs';
-
 import { map, tap } from 'rxjs/operators';
 import { Plugins } from '@capacitor/core';
 import { environment } from '../../environments/environment';
@@ -13,6 +12,7 @@ export interface AuthResponseData {
   email: string;
   refreshToken: string;
   localId: string;
+  expiresIn: string;
   registered?: boolean;
 }
 
@@ -27,7 +27,7 @@ export class AuthService implements OnDestroy {
     return this._user.asObservable().pipe(
       map((user) => {
         if (user) {
-          return !!user.toekn;
+          return !!user.token;
         } else {
           return false;
         }
@@ -128,7 +128,7 @@ export class AuthService implements OnDestroy {
       }
   }
 
-  private autoLogout(duration: Number){
+  private autoLogout(duration: number){
     if(this.activeLogoutTimer){
         clearTimeout(this.activeLogoutTimer);
     }this.activeLogoutTimer = setTimeout(()=>{
@@ -138,9 +138,9 @@ export class AuthService implements OnDestroy {
 
   private setUserData (userData: AuthResponseData){
     const expirationTime = new Date(
-        new Date().getTime() +  + userData.expiresIn*1000
+        new Date().getTime() +  + userData.expiresIn * 1000
     );
-    const user= new userData(
+    const user= new User(
         userData.localId,
         userData.email,
         userData.idToken,

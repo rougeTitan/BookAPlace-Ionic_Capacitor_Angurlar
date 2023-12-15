@@ -17,7 +17,7 @@ export class EditOfferPage implements OnInit,OnDestroy {
  place:Place;
  placeId:string;
  form:FormGroup;
- isLoading:false;
+ isLoading: boolean = false;
  private placeSub:Subscription;
 
 
@@ -60,7 +60,7 @@ export class EditOfferPage implements OnInit,OnDestroy {
             buttons:[{
               text:'okay',
               handler:()=>{
-                this.router.navigate(['/places/tabs/offers'];)
+                this.router.navigate(['/places/tabs/offers']);
               }
             }]
           }).then(alertEl => {

@@ -2,14 +2,11 @@ import { Injectable } from '@angular/core';
 import { Router, CanLoad, Route, UrlSegment } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { take, tap, switchMap } from 'rxjs/operators';
-
 import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
-
-//what are route guards?
 export class AuthGuard implements CanLoad {
   constructor(private authService: AuthService, private router: Router) {}
 

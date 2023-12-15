@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, from } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { take, tap, delay, switchMap, map } from 'rxjs/operators';
 
 import { Booking } from './booking.model';
@@ -45,7 +45,7 @@ export class BookingService {
       take(1),
       switchMap((userId) => {
         if (!userId) {
-          throw new Error('No userId found!');
+          throw new Error('No user id found!');
         }
         fetchedUserId = userId;
         return this.authService.token;
@@ -64,7 +64,7 @@ export class BookingService {
           dateFrom,
           dateTo
         );
-        return this.http.post<{ name: string }>(``, {
+        return this.http.post<{ name: string }>(`firebase url`, {
           ...newBooking,
           id: null,
         });
@@ -85,7 +85,7 @@ export class BookingService {
     return this.authService.token.pipe(
       take(1),
       switchMap((token) => {
-        return this.http.delete(``);
+        return this.http.delete(`firebase url`);
       }),
       switchMap(() => {
         return this.bookings;
@@ -110,7 +110,7 @@ export class BookingService {
       }),
       take(1),
       switchMap((token) => {
-        return this.http.get<{ [key: string]: BookingData }>(``);
+        return this.http.get<{ [key: string]: BookingData }>(`FIREBASE URL`);
       }),
       map((bookingData) => {
         const bookings = [];

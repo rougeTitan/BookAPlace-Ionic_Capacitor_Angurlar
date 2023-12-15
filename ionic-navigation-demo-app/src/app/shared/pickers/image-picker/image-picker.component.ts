@@ -8,7 +8,7 @@ import {
   Input,
 } from '@angular/core';
 import {
-  Plugin,
+  Plugins,
   Capacitor,
   CameraSource,
   CameraResultType,
@@ -26,7 +26,7 @@ export class ImagePickerComponent implements OnInit {
   @Output() imagePicker = new EventEmitter<string | File>();
   @Input() showPreview = false;
   selectedImage: string;
-  usePicker: false;
+  usePicker:boolean =  false;
 
   constructor(private platform: Platform) {}
 

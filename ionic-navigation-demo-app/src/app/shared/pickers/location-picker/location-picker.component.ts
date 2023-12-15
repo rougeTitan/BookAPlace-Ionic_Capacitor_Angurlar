@@ -21,7 +21,7 @@ export class LocationPickerComponent implements OnInit {
   @Output() locationPick = new EventEmitter<PlaceLocation>();
   @Input() showPreview = false;
   selectedLocationImage: string;
-  isLoading: false;
+  isLoading: boolean = false;
 
   constructor(
     private modalCtrl: ModalController,
@@ -53,7 +53,7 @@ export class LocationPickerComponent implements OnInit {
         ],
       })
       .then((actionSheetEL) => {
-        actionSheetEL.presnet();
+        actionSheetEL.present();
       });
   }
   private locateUser() {
@@ -130,7 +130,7 @@ export class LocationPickerComponent implements OnInit {
 
   private getAddress(lat: number, lng: number) {
     return this.http
-      .get<any>(`http=${lat},${lng}&key=${environment.googleMpasAPIKey}`)
+      .get<any>(`http=${lat},${lng}&key=${environment.googleMapsAPIKey}`)
       .pipe(
         map((geoData) => {
           if (!geoData || !geoData.results || geoData.results.length === 0) {

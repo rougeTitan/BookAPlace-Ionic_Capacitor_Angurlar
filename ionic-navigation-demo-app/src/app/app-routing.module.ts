@@ -1,35 +1,34 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './auth/auth.guard';
 
-import {AuthGuard} from './auth/auth.guard';
-
-
-//setting basic routes when page loads
-//loadchildern - lazy-loading feature modules
 const routes: Routes = [
   {
     path: '',
-    redirectTo:'places',
-    pathMatch: 'full'
+    redirectTo: 'places',
+    pathMatch: 'full',
   },
   {
     path: 'auth',
-    loadChildren: () => import('./auth/auth.module').then(m=> m.AuthPageModule)},
-  {
-    path:'places',
-    loadChildren: () => import ('./places/places.module').then(m=>m.PlacesPageModule),
-    canLoad: [AuthGuard]
+    loadChildren: () =>
+      import('./auth/auth.module').then((m) => m.AuthPageModule),
   },
   {
-    path:'bookings',
-    loadChildren: () => import ('./bookings/bookings.module').then(m=>m.BookingsPageModule),
-    canLoad: [AuthGuard]
-  }] ;
+    path: 'places',
+    loadChildren: () =>
+      import('./places/places.module').then((m) => m.PlacesPageModule),
+    canLoad: [AuthGuard],
+  },
+  {
+    path: 'bookings',
+    loadChildren: () =>
+      import('./bookings/bookings.module').then((m) => m.BookingsPageModule),
+    canLoad: [AuthGuard],
+  },
+];
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(routes)
-  ],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

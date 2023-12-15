@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IonItemSliding, LoadingController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
-
 import { BookingService } from './booking.service';
 import { Booking } from './booking.model';
 
