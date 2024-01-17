@@ -3,8 +3,8 @@ import { Place } from '../../place.model';
 
 @Component({
   selector: 'app-offer-item',
-  templateUrl: './offer-item.page.html',
-  styleUrls: ['./offer-item.page.scss'],
+  templateUrl: './offer-item.component.html',
+  styleUrls: ['./offer-item.component.scss'],
 })
 export class OfferItemComponent implements OnInit {
   @Input() offer: Place;

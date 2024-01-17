@@ -68,29 +68,29 @@ export class AuthService implements OnDestroy {
                 return null;
             }
 
-            const pareseData = JSON.parse(storeData.value) as {
+            const parsedData = JSON.parse(storeData.value) as {
                 token: string;
                 tokenExpirationDate: string;
                 userId: string;
                 email: string;
             };
 
-            const expirationTime = new Date(pareseData.tokenExpirationDate);
+            const expirationTime = new Date(parsedData.tokenExpirationDate);
             if(expirationTime<=new Date()){
                 return null;
             }
 
-            const user = new User{
-                pareseData.userId,
-                pareseData.email,
-                pareseData.token,
+            const user = new User(
+                parsedData.userId,
+                parsedData.email,
+                parsedData.token,
                 expirationTime
-            };
+            );
             return user;
         }),
         tap(user => {
             if(user){
-                this.user.next(user);
+                this._user.next(user);
                 this.autoLogout(user.tokenDuration);
             }
         }),
@@ -102,14 +102,14 @@ export class AuthService implements OnDestroy {
 
   signup(email:string, password: string){
     return this.http.post<AuthResponseData>(
-        `googleapi`,{
+        `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.firebaseAPIKey}`,{
             email:email, password:password,returnSecureToken: true}).pipe(tap(this.setUserData.bind(this)));
   }
 
 
   login(email:string, password: string) {
     return this.http.post<AuthResponseData>(
-        `googlemapapikey`,{
+        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.firebaseAPIKey}`,{
             email:email, password:password, returnSecureToken: true }
     ).pipe(tap(this.setUserData.bind(this)));
   }

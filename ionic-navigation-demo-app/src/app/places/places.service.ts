@@ -39,11 +39,12 @@ export class PlacesService {
     ){}
 
     fetchPlaces(){
+        //need to add authentication
         return this.authService.token.pipe(
             take(1),
             switchMap(token=> {
                 return this.http.get<{[key:string]: PlaceData}>(
-                    `https://ionic-angular-course.firebaseio.com/offered-places.json?auth=${token}`
+                    `https://ionic-angular-backend-abebf-default-rtdb.firebaseio.com/offered-places.json?auth=${token}`
                 );
             }),
             map(resData=> {
@@ -54,7 +55,7 @@ export class PlacesService {
                             key,
                             resData[key].title,
                             resData[key].description,
-                            resData[key],imageUrl,
+                            resData[key].imageUrl,
                             resData[key].price,
                             new Date(resData[key].availableFrom),
                             new Date(resData[key].availableTo),
@@ -76,7 +77,7 @@ export class PlacesService {
             take(1),
             switchMap(token=>{
                 return this.http.get<PlaceData>(
-                    ``
+                    `https://ionic-angular-backend-abebf-default-rtdb.firebaseio.com/offered-places/${id}.json?auth=${token}`
                 );
             }),
             map(placeData=>{
@@ -101,7 +102,7 @@ export class PlacesService {
         return this.authService.token.pipe(
             take(1),
             switchMap(token=>{
-                return this.http.post<{imageUrl: stringify, imagePath:string}>(
+                return this.http.post<{imageUrl: string, imagePath:string}>(
                     ``,
                     uploadData,
                     {headers:{Authorization:'Bearer'+token}}
@@ -145,7 +146,7 @@ export class PlacesService {
                     location
                 );
                 return this.http.post<{name:string}>(
-                    ``,{
+                    `https://ionic-angular-backend-abebf-default-rtdb.firebaseio.com/offered-places.json?auth=${token}`,{
                         ...newPlace,
                         id:null
                     }
@@ -196,7 +197,7 @@ export class PlacesService {
                     oldPlace.location
                 );
                 return this.http.put(
-                    ``,
+                    `https://ionic-angular-backend-abebf-default-rtdb.firebaseio.com/offered-places/${placeId}.json?auth=${fetchedToken}`,
                     {...updatedPlaces[updatedPlaceIndex], id: null}
                 );
             }),

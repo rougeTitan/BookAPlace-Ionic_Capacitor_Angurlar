@@ -130,7 +130,7 @@ export class LocationPickerComponent implements OnInit {
 
   private getAddress(lat: number, lng: number) {
     return this.http
-      .get<any>(`http=${lat},${lng}&key=${environment.googleMapsAPIKey}`)
+      .get<any>(`http://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${environment.googleMapsAPIKey}`)
       .pipe(
         map((geoData) => {
           if (!geoData || !geoData.results || geoData.results.length === 0) {
@@ -142,6 +142,8 @@ export class LocationPickerComponent implements OnInit {
   }
 
   private getMapImage(lat: number, lng: number, zoom: number) {
-    return ``;
+    return `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=${zoom}$size=500x300&maptype=roadmap
+    &markers=color:red%7Clabel:Place%7C${lat},${lng}
+    &key=${environment.googleMapsAPIKey}`;
   }
 }

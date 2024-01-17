@@ -64,7 +64,7 @@ export class BookingService {
           dateFrom,
           dateTo
         );
-        return this.http.post<{ name: string }>(`firebase url`, {
+        return this.http.post<{ name: string }>(`https://ionic-angular-backend-abebf-default-rtdb.firebaseio.com/bookings.json?auth=${token}`, {
           ...newBooking,
           id: null,
         });
@@ -85,7 +85,7 @@ export class BookingService {
     return this.authService.token.pipe(
       take(1),
       switchMap((token) => {
-        return this.http.delete(`firebase url`);
+        return this.http.delete(`https://ionic-angular-backend-abebf-default-rtdb.firebaseio.com/bookings/${bookingId}.json?auth=${token}`);
       }),
       switchMap(() => {
         return this.bookings;
@@ -110,7 +110,7 @@ export class BookingService {
       }),
       take(1),
       switchMap((token) => {
-        return this.http.get<{ [key: string]: BookingData }>(`FIREBASE URL`);
+        return this.http.get<{ [key: string]: BookingData }>(`https://ionic-angular-backend-abebf-default-rtdb.firebaseio.com/bookings.json?orderBy="userId"&equalTo="${fetchedUserId}"&auth=${token}`);
       }),
       map((bookingData) => {
         const bookings = [];

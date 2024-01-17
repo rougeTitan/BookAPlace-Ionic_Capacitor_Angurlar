@@ -27,7 +27,7 @@ export class MapModalComponent implements OnInit,AfterViewInit,OnDestroy {
 
   ngAfterViewInit() {
     this.getGoogleMaps()
-    .then(this.googleMaps => {
+    .then(googleMaps => {
       this.googleMaps = googleMaps;
       const mapEl = this.mapElementRef.nativeElement;
       const map = new googleMaps.Map(mapEl,{
@@ -82,7 +82,7 @@ export class MapModalComponent implements OnInit,AfterViewInit,OnDestroy {
 
     return new Promise((resolve,reject)=>{
       const script = document.createElement('script');
-      script.src = 'googlemap api'+ environment.googleMapsAPIKey;
+      script.src = 'https://maps.googleapis.com/maps/api/js?key='+ environment.googleMapsAPIKey;
       script.async =true;
       script.defer = true;
       document.body.appendChild(script);
