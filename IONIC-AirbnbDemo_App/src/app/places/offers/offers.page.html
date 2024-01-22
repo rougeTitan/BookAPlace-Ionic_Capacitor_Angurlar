@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar>
+    <!--Put your menu button (hamburger button here)-->
+    <!--You can connect this button to id in the side drawer in app.component.ts file-->
+    <ion-buttons slot="start">
+      <ion-menu-button menu="first"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>My Offers</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button [routerLink]="['/', 'places', 'offers', 'new-offer']">
+        <ion-icon name="add" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" size-sm="8" offset-sm="2">
+        <div class="ion-text-center" *ngIf="!isLoading && offers.length <= 0">
+          <ion-text>
+            No offers found! Please create one first!
+          </ion-text>
+          <ion-button color="primary" routerLink="/places/offers/new-offer"
+            >Offer New Place</ion-button
+          >
+        </div>
+        <div class="ion-text-center" *ngIf="isLoading">
+          <ion-spinner color="primary"></ion-spinner>
+        </div>
+        <ion-virtual-scroll
+          [items]="offers"
+          *ngIf="!isLoading && offers.length > 0"
+          approxItemHeight="70px"
+        >
+          <!--Slide left to see options? Wrap ion-item-sliding around your ion-item-->
+          <!--https://ionicframework.com/docs/api/item-sliding-->
+          <!--Add #***** to your HTML element, for example #slidingItem, to bring the whole Element into the function(HTML feature)-->
+          <ion-item-sliding *virtualItem="let offer" #slidingItem>
+            <app-offer-item [offer]="offer"></app-offer-item>
+            <!--Put your option buttons within ion-item-sliding-->
+            <!--side start or end to show the options by swiping left or right on the ion-item-->
+            <!--PROBLEM: If there are 2 sets of ion-item-options, with same color options(Not the primary color),
+            when you look at the right one, the button color gets inconsistent(primary and secondary color showing at the same time).-->
+            <ion-item-options side="end">
+              <!--You need to use (click) listener to navigate to other page, because if use routerLink, the sliding won't close itself when come back-->
+              <ion-item-option
+                color="secondary"
+                (click)="onEdit(offer.id, slidingItem)"
+              >
+                <ion-icon name="create" slot="top"></ion-icon>
+                Edit
+              </ion-item-option>
+            </ion-item-options>
+            <!-- <ion-item-options side="end">
+              <ion-item-option>
+                <ion-item-option
+                  color="secondary"
+                  (click)="onEdit(place.id, slidingItem)"
+                >
+                  <ion-icon name="create" slot="top"></ion-icon>
+                  Edit
+                </ion-item-option>
+              </ion-item-option>
+            </ion-item-options> -->
+          </ion-item-sliding>
+        </ion-virtual-scroll>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

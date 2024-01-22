@@ -1,0 +1,115 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <!--Put your menu button (hamburger button here)-->
+      <!--You can connect this button to id in the side drawer in app.component.ts file-->
+      <ion-menu-button menu="first"></ion-menu-button>
+      <!-- <ion-button (click)="onOpenMenu()">Open</ion-button> -->
+    </ion-buttons>
+    <ion-title>Discover Places</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!--Put a group of buttons together, only one active at the time.-->
+  <!--use ionChange Ionic value listener to get the value-->
+  <ion-segment (ionChange)="onFilterUpdate($event)">
+    <!--value is not visible in the UI, but it will be useful when passed into the code to figure out which button in the segment is pressed.-->
+    <ion-segment-button value="all">All Places</ion-segment-button>
+    <ion-segment-button value="bookable">Bookable Places</ion-segment-button>
+  </ion-segment>
+  <!--Show no places can be found-->
+  <ion-grid *ngIf="!isLoading && (!relevantPlaces || relevantPlaces.length <= 0)">
+    <ion-row>
+      <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center">
+        <ion-text>There are no bookable places right now, please come back later!</ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid *ngIf="isLoading">
+    <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center">
+      <ion-spinner color="primary"></ion-spinner>
+    </ion-col>
+  </ion-grid>
+  <!--If there are places then list out the places-->
+  <ion-grid *ngIf="!isLoading && relevantPlaces.length > 0">
+    <ion-row>
+      <!--Takes the whole row (size 12), set size to 8 when the window is middle sized, and make space the horizontal sides of the ion-col-->
+      <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>
+              {{relevantPlaces[0].title}}
+            </ion-card-title>
+            <ion-card-subtitle>
+              {{relevantPlaces[0].price | currency}} / Night
+              <!--currency is default angular pipe feature-->
+            </ion-card-subtitle>
+          </ion-card-header>
+          <ion-img [src]="relevantPlaces[0].imageUrl"></ion-img>
+          <ion-card-content>
+            <!--Example use of ionic-label. You also can use ion-text. You can do coloring on it. Use ion-text if you're doing basic coloring only.-->
+            <p>
+              <ion-text color="primary"
+                >{{relevantPlaces[0].description}}</ion-text
+              >
+            </p>
+          </ion-card-content>
+          <!-- <div text-right padding></div> Old Ionic 4 stuff-->
+          <div class="ion-text-center">
+            <!--routerDirection: (Ionic) Tell Ionic that it should do forward, backward or root page
+                    animations-->
+            <!--[routerLink] tells the Ionic where you  want to go, by from root ("/") -> places page
+                     -> tabs page -> discover page -> A page which need :placeId-->
+            <!--Same as /places/tabs/discover/:placeId-->
+            <ion-button
+              fill="clear"
+              color="primary"
+              routerDirection="forward"
+              [routerLink]="['/', 'places', 'discover', 'place-detail', relevantPlaces[0].id]"
+            >
+              More
+            </ion-button>
+          </div>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center">
+        <!--ion-virtual-scroll: An item that scroll through unlimited list of items without lagging down the app performance.
+            In traditional for loop, all items are rendered no matter you're viewing them or not.
+            But ion-virtual-scroll only renders the ion-item that is in your screen view only.-->
+        <!--You CANNOT put any splice(), filter(), split() method in the [items] attribute,
+               it will cause the whole Ionic app hangs.-->
+        <!--approxItemHeight tells ion-virtual-scroll the height of the ion-item which helps 
+                it to determine and prepare how far you will scroll down and how many item you will have on screen.
+              Improves performance.-->
+        <ion-virtual-scroll
+          [items]="listedLoadedPlaces"
+          approxItemHeight="70px"
+        >
+          <!--detail can tell Ionic to make arrow pointer that indicates this item can be clicked.-->
+          <ion-item
+            [routerLink]="['/', 'places', 'discover', 'place-detail', place.id]"
+            detail
+            *virtualItem="let place"
+          >
+            <ion-thumbnail slot="start">
+              <!--ion-virtual-scroll loads ion-img efficiently,
+                because it can determine when to load that image and unload image so app performance is improved,
+                so don't use HTML img in here*-->
+              <!--If use traditional img, then it will waste a lot of network bandwidth to load all images,
+                  you app will have to wait those images to be ready,
+                  your app will be jerky when scrolling through the list.-->
+              <ion-img [src]="place.imageUrl"></ion-img>
+            </ion-thumbnail>
+            <ion-label>
+              <h2>{{place.title}}</h2>
+              <p>{{place.description}}</p>
+            </ion-label>
+          </ion-item>
+        </ion-virtual-scroll>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

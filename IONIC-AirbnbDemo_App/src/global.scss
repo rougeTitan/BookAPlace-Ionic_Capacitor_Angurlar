@@ -1,0 +1,55 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+ 
+// DON'T TOUCH THE DEFAULTS******
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+// ADD YOUR GLOBAL CSS STYLE HERE***
+// body {
+//     margin: 100px;
+// }
+
+// You may set specific style that applies only on iOS or Android, just write like below
+.ios {
+    // Write anything here
+}
+
+.md {
+    // Write anything here
+}
+
+// Set the global element (Not class, but Ionic component itself)
+// Remember, you always can go to you required Ionic component, and look at CSS Custom Properties section.
+// This example below, is how you use those Custom CSS properties:
+ion-button { // <--- This is completely acceptable in Ionic world
+    // --color: white;
+    // --background: white;
+}
+
+// Make the ion-label Color becomes Red(referenced from --ion-color-danger set in variables.scss file),
+// when the form element's value is invalid/touched.
+.ion-invalid .ion-touched ion-label {
+    --color: var(--ion-color-danger);
+}
